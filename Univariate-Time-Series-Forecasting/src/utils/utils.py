@@ -20,7 +20,7 @@ def evaluate(net, valid_set, history):
     '''
     net.eval()
 
-    val_predict = net(valid_set['X'])
+    val_predict = net(valid_set['X'], valid_set['Y'])
     val_loss = loss_func(val_predict, valid_set['Y'])
     history['val_loss'].append(val_loss.item())
 
@@ -43,7 +43,7 @@ def train(net, train_loader, optimizer, history):
     train_loss = 0
     for input, target in train_loader:
         optimizer.zero_grad()
-        loss = loss_func(net(input), target)
+        loss = loss_func(net(input,target), target)
         loss.backward()
         optimizer.step()
 
@@ -119,7 +119,6 @@ def train_test_split(subsequences):
     test_set = dict()
     test_set['X'] = torch.Tensor(testX).to(device)
     test_set['Y'] = torch.Tensor(testY).to(device)
-    print(valid_set)
 
     return train_loader, valid_set, test_set
 

@@ -17,7 +17,7 @@ parser.add_argument("--pretrained_path", type=str,
                     default="pretrained/car_sales.pt",
                     help="Location of the pretrained net")
 #数据集路径
-parser.add_argument("--dataset_path", type=str, default="C:\\Users\\cx\\Desktop\\数据集\\wtbdata_245days.csv",
+parser.add_argument("--dataset_path", type=str, default="C:\\Users\\22279\\Desktop\\数据集\\风机功率数据\\wtbdata_245days.csv",
                     help="Location of the dataset file")
 #使用多少时间步长的数据来预测
 parser.add_argument("--lag", type=int, default=24,

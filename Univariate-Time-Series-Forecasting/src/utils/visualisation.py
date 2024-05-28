@@ -25,11 +25,22 @@ def show_evaluation(net,test_set,scaler,i,test_MSE,test_RMSE,test_MAE,test_R2,de
     '''
     #预测测试数据集
     net.eval()
-    test_predict = net(test_set['X'])
+    test_predict = net(test_set['X'],test_set['Y'])
 
     # 对实际值和预测值反归一化
     test_predict = scaler.inverse_transform(test_predict.cpu().data.numpy())
     test_set['Y'] = scaler.inverse_transform(test_set['Y'].cpu().squeeze(-1).data.numpy().reshape(-1,1))
+
+    print(test_predict)
+    print(test_set['Y'])
+
+    tensor1=np.array(test_set['Y'])
+    tensor2=np.array(test_predict)
+    column_data1=tensor1.flatten()
+    column_data2 = tensor2.flatten()
+    data=np.column_stack((column_data1,column_data2))
+    df = pd.DataFrame(data, columns=['real','predict'])
+    df.to_csv('C:/Users/22279/Desktop/transformerdata.csv',index=False)
 
     # 绘制原始序列与预测序列
     plt.figure(figsize=(20,10))
@@ -38,10 +49,10 @@ def show_evaluation(net,test_set,scaler,i,test_MSE,test_RMSE,test_MAE,test_R2,de
     plt.ylabel("Patv")
     plt.title('Forecast and Real')
     plt.legend()
-    save_dir_path='C:/Users/cx/Desktop/imagesgru/predict/'
+    save_dir_path='C:/Users/22279/Desktop/imagesgru/predict/'
     if not os.path.exists(save_dir_path):
         os.makedirs(save_dir_path)
-    plt.savefig('C:/Users/cx/Desktop/imagesgru/predict/Turb{}predict.png'.format(i + 1))
+    plt.savefig('C:/Users/22279/Desktop/imagesgru/predict/Turb{}predict.png'.format(i + 1))
     plt.clf()
     #plt.show()
 
@@ -75,10 +86,10 @@ def show_loss(history,i):
     plt.xlabel('Epoch')
     plt.ylabel('loss')
     plt.legend()
-    save_dir_path = 'C:/Users/cx/Desktop/imagesgru/loss/'
+    save_dir_path = 'C:/Users/22279/Desktop/imagesgru/loss/'
     if not os.path.exists(save_dir_path):
         os.makedirs(save_dir_path)
-    plt.savefig('C:/Users/cx/Desktop/imagesgru/loss/Turb{}loss.png'.format(i + 1))
+    plt.savefig('C:/Users/22279/Desktop/imagesgru/loss/Turb{}loss.png'.format(i + 1))
     plt.clf()
     #plt.show()
 
@@ -111,10 +122,10 @@ def display_dataset(dataset,i):
     #plt.xticks(tick_positions, x_ticks, size='small')
     plt.legend()
     #plt.show()
-    save_dir_path = 'C:/Users/cx/Desktop/imagesgru/all data/'
+    save_dir_path = 'C:/Users/22279/Desktop/imagesgru/all data/'
     if not os.path.exists(save_dir_path):
         os.makedirs(save_dir_path)
-    plt.savefig('C:/Users/cx/Desktop/imagesgru/all data/Turb{}all.png'.format(i+1))
+    plt.savefig('C:/Users/22279/Desktop/imagesgru/all data/Turb{}all.png'.format(i+1))
     plt.clf()
 
 
@@ -141,9 +152,9 @@ def display_dataset(dataset,i):
     plt.subplot(414)
     plt.plot(residual,label='Residuals')
     plt.legend()
-    save_dir_path = 'C:/Users/cx/Desktop/imagesgru/decompose/'
+    save_dir_path = 'C:/Users/22279/Desktop/imagesgru/decompose/'
     if not os.path.exists(save_dir_path):
         os.makedirs(save_dir_path)
-    plt.savefig('C:/Users/cx/Desktop/imagesgru/decompose/Turb{}decompose.png'.format(i + 1))
+    plt.savefig('C:/Users/22279/Desktop/imagesgru/decompose/Turb{}decompose.png'.format(i + 1))
     plt.clf()
     #plt.show()

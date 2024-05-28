@@ -22,10 +22,10 @@ if __name__ == "__main__":
         #训练模式
         if config.mode == "train":
             # Create new instance of the RNN
-            net=LSTMModel(input_dim=train_loader.dataset[0][0].shape[-1],hidden_dim=config.hidden_dim,num_layers=config.num_layers)
+            #net=LSTMModel(input_dim=train_loader.dataset[0][0].shape[-1],hidden_dim=config.hidden_dim,num_layers=config.num_layers)
             #net=GRUModel(input_dim=train_loader.dataset[0][0].shape[-1],hidden_dim=config.hidden_dim,num_layers=config.num_layers)
-            #net = TransformerModel(n_encoder_inputs=train_loader.dataset[0][0].shape[-1],n_decoder_inputs=config.output_size,num_heads=config.num_heads,
-                                  # Sequence_length=config.lag,d_model=config.hidden_dim,dropout=config.dropout,num_layer=config.num_layers)
+            net = TransformerModel(n_encoder_inputs=train_loader.dataset[0][0].shape[-1],n_decoder_inputs=config.output_size,num_heads=config.num_heads,
+                                   Sequence_length=config.lag,d_model=config.hidden_dim,dropout=config.dropout,num_layer=config.num_layers)
             net.to(device)
             #训练模型
             train_loop(net, config.epochs, config.lr, config.wd,train_loader, valid_set, i,debug=True)
@@ -48,4 +48,4 @@ if __name__ == "__main__":
 
         'Test R2':test_R2
     })
-    df.to_csv('C:/Users/cx/Desktop/zhibiaogru(144).csv',index=False)
+    df.to_csv('C:/Users/22279/Desktop/zhibiaogru(144).csv',index=False)
